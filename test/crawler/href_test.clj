@@ -27,7 +27,8 @@
   (testing "Removes the fragment part from an url"
     (testing "valid input"
       (testing "fragment"
-        (is (= "http://en.wikipedia.org/wiki/Montreal" (remove-fragment "http://en.wikipedia.org/wiki/Montreal#home"))))
+        (is (= "http://en.wikipedia.org/wiki/Montreal" 
+               (remove-fragment "http://en.wikipedia.org/wiki/Montreal#home"))))
       (testing "no fragment"
         (is (= "http://en.wiki.org" (remove-fragment "http://en.wiki.org")))))
     (testing "invalid input"
@@ -45,5 +46,5 @@
                      "http://wikipedia.org/media/image.jpg"
                      "http://external.org/resource/index.html"
                      "http://fr.external.com"}]
-      (is (= expected (into #{} (links base (-> "index.html" io/resource io/reader))))))))
+      (is (= expected (into #{} (links base (-> "./resource/index.html" io/file io/reader))))))))
 
