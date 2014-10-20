@@ -36,14 +36,14 @@
            "asdasdasd #hahha"
            ))))
 
-;(deftest links-test
-;  (testing "returns a sequence of links from a reader."
-;    (let [base "http://wikipedia.org/Main/index.html"
-;          expected #{"http://en.wikipedia.org/wiki/Montreal"
-;                     "http://en.wikipedia.org/wiki/resource/Paris"
-;                     "http://wikipedia.org/resource/Page"
-;                     "http://wikipedia.org/media/image.jpg"
-;                     "http://external.org/resource/index.html"
-;                     "http://fr.external.com"}]
-;      (is (= expected (into #{} (links base (io/resource
+(deftest links-test
+  (testing "returns a sequence of links from a reader."
+    (let [base "http://wikipedia.org/Main/index.html"
+          expected #{"http://en.wikipedia.org/wiki/Montreal"
+                     "http://en.wikipedia.org/wiki/resource/Paris"
+                     "http://wikipedia.org/resource/Page"
+                     "http://wikipedia.org/media/image.jpg"
+                     "http://external.org/resource/index.html"
+                     "http://fr.external.com"}]
+      (is (= expected (into #{} (links base (-> "index.html" io/resource io/reader))))))))
 

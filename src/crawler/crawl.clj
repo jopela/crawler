@@ -4,7 +4,6 @@
             [crawler.request :as req]
             [clojure.string :as s]))
 
-
 (defn crawl-web
   "Crawls the web starting from root. Filters the url found while crawling with the
   href-filter predicate. Crawls no more then limit unvisited urls. Returns a sequence of page
