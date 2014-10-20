@@ -19,9 +19,8 @@
     (catch NullPointerException e
       nil)))
 
-(defn stream->str
-  "Reads the content of an InputStream into a string"
+(defn stream->rdr
+  "Reads the content of an InputStream into a reader"
   [stream]
-  (with-open [rdr (io/reader stream)]
-    (s/join (line-seq rdr))))
+  (io/reader stream))
 

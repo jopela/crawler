@@ -8,10 +8,10 @@
 (defn parse
   "Parse an http response stream into an html 'dom' clojure data structure, returns an empty 'dom'
   when passed nil as argument."
-  [stream]
-  (if (nil? stream)
+  [s]
+  (if (nil? s)
     '()
-    (html/html-resource stream)))
+    (html/html-resource s)))
 
 (defn anchors
   "Returns a collection of anchors html elem from a collection of tags."
@@ -24,7 +24,7 @@
   (get-in elem [:attrs :href]))
 
 (defn normalize
-  "transform the uri into an absolute url anchored at base."
+  "Transform the uri into an absolute url anchored at base."
   [base uri]
   (if (and (u/valid-url? base) (u/valid-uri? uri))
     (if (u/absolute? uri)
@@ -40,4 +40,13 @@
     (let [[no-fragment & more] (s/split url #"#")]
       no-fragment)))
 
+(defn links
+  "Returns a sequence of links from the page-rdr"
+  [base page-rdr]
+  (let [operations (comp (r/remove nil?)
+                         (r/map remove-fragment)
+                         (r/map (partial normalize base)) 
+                         (r/map page-href))
+        hrefs (anchors (parse page-rdr))]
+    (into #{} (operations hrefs))))
 

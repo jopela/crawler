@@ -33,5 +33,6 @@
       (are [i] (is (nil? (remove-fragment i)))
            nil
            "asdasdasd #hahha"
-           "http:/go.com"))))
+           ))))
+
 
