@@ -1,7 +1,9 @@
 (ns crawler.crawl
-  (:require [crawler.href :as href]
-            [crawler.request :as request]
-            [crawler.string :as s]))
+  (:require [clojure.java.io :as io]
+            [crawler.href :as href]
+            [crawler.request :as req]
+            [clojure.string :as s]))
+
 
 (defn crawl-web
   "Crawls the web starting from root. Filters the url found while crawling with the
@@ -14,7 +16,7 @@
       (let [node (peek to-visit)]
         (if (visited node)
           (recur (pop to-visit) visited pages)
-          (let [page-rdr (-> node sync-get stream->rdr)]
-            (recur (concat (pop to-visit) (href/links node parse-rdr)) 
+          (let [page-rdr (-> node req/sync-get req/stream->rdr)]
+            (recur (concat (pop to-visit) (href/links node page-rdr)) 
                    (conj visited node)
                    (conj pages (s/join "/n" (line-seq page-rdr))))))))))
